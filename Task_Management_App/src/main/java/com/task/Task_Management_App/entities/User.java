@@ -12,9 +12,9 @@ import jakarta.persistence.Table;
 import lombok.Data;
 import java.util.*;
 
-@Data
+@Data //automatically creates useful methods like getters, setters etc
 @Entity
-@Table(name="user")
+@Table(name="user") //means that class can be stored in the db
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,17 +26,19 @@ public class User implements UserDetails {
 
     private Role role;
     
+    //shows us the users power that is role
     @Override
 	public Collection <?extends GrantedAuthority > getAuthorities() {
 		return List.of(new SimpleGrantedAuthority(role.name()));
 	}
 
+    // shows user's username
 	@Override
 	public String getUsername() {
 		return username;
 	}
 
-
+    //rest of these tell us different things about wether the user's account is still good and can be used
 	@Override
 	public boolean isAccountNonExpired() {
 		return true;
