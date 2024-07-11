@@ -1,6 +1,5 @@
 package com.task.Task_Management_App.config;
 
-import com.task.Task_Management_App.service.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
