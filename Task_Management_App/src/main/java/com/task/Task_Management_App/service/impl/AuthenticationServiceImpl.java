@@ -43,7 +43,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             signInRequest.getUsername(), signInRequest.getPassword()
         ));
         
-        // Retrieve the user by username
+       
         var user = userRepository.findByUsername(signInRequest.getUsername())
             .orElseThrow(() -> new IllegalArgumentException("Invalid username"));
 
