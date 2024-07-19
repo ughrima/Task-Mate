@@ -7,7 +7,6 @@ import { Router } from '@angular/router';
   templateUrl: './signup.component.html'
 })
 export class SignupComponent {
-
   email = '';
   username = '';
   password = '';

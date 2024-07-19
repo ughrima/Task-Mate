@@ -7,7 +7,6 @@ import { Router } from '@angular/router';
   templateUrl: './signin.component.html'
 })
 export class SigninComponent {
-
   username = '';
   password = '';
 

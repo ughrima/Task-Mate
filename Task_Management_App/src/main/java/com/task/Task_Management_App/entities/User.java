@@ -23,7 +23,6 @@ public class User implements UserDetails {
     private String username;
     private String password;
     private String email;
-
     private Role role;
     
     //shows us the users power that is role
