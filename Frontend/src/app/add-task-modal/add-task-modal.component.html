@@ -1,12 +1,22 @@
-<div class="modal">
-    <div class="modal-content">
-      <h2>Add Task</h2>
-      <label>Title:</label>
-      <input [(ngModel)]="task.title" />
-      <label>Description:</label>
-      <input [(ngModel)]="task.description" />
-      <button (click)="saveTask()">Save</button>
-      <button (click)="close.emit()">Close</button>
+<div class="modal-overlay">
+    <div class="modal">
+      <div class="modal-content">
+        <h2>Add Task</h2>
+        <form (ngSubmit)="saveTask()">
+          <div class="form-group">
+            <label for="title">Title:</label>
+            <input id="title" [(ngModel)]="task.title" name="title" required />
+          </div>
+          <div class="form-group">
+            <label for="description">Description:</label>
+            <input id="description" [(ngModel)]="task.description" name="description" required />
+          </div>
+          <div class="modal-actions">
+            <button type="submit" class="btn btn-primary">Save</button>
+            <button type="button" class="btn btn-secondary" (click)="close.emit()">Close</button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
   

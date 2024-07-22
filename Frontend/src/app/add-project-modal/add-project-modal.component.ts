@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { Project } from '../task.model';
+import { ProjectService } from '../project.service';
 
 @Component({
   selector: 'app-add-project-modal',
@@ -8,10 +9,25 @@ import { Project } from '../task.model';
 })
 export class AddProjectModalComponent {
   @Output() close = new EventEmitter<void>();
-  @Output() save = new EventEmitter<Project>();
-  project: Project = { name: '', description: '', tasks: [] };
+  @Output() projectAdded = new EventEmitter<Project>();
+
+  project: Project = {
+    name: '',
+    description: '',
+    tasks: []
+  };
+
+  constructor(private projectService: ProjectService) {}
 
   saveProject(): void {
-    this.save.emit(this.project);
+    this.projectService.addProject(this.project).subscribe(
+      (project) => {
+        this.projectAdded.emit(project);
+        this.close.emit();
+      },
+      (error) => {
+        console.error('Error saving project:', error);
+      }
+    );
   }
 }

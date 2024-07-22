@@ -4,69 +4,86 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.7);
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 1000;
   }
   
   .modal-content {
     background: white;
-    padding: 20px;
-    border-radius: 8px;
-    width: 300px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 30px;
+    border-radius: 10px;
+    width: 400px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    position: relative;
   }
   
   h2 {
     margin-top: 0;
+    text-align: center;
+    font-size: 1.5em;
+    margin-bottom: 20px;
   }
   
   .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
   }
   
   label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
+    font-weight: bold;
+    font-size: 1em;
   }
   
-  input {
+  input,
+  textarea {
     width: 100%;
-    padding: 8px;
-    box-sizing: border-box;
+    padding: 10px;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 5px;
+    font-size: 1em;
+    box-sizing: border-box;
+  }
+  
+  textarea {
+    resize: vertical;
+    height: 100px;
   }
   
   .modal-actions {
     display: flex;
     justify-content: flex-end;
+    gap: 10px;
   }
   
   .btn {
-    padding: 8px 12px;
+    padding: 10px 20px;
     border: none;
-    border-radius: 4px;
+    border-radius: 5px;
     cursor: pointer;
+    font-size: 1em;
   }
   
   .btn-primary {
-    background: #007bff;
+    background-color: #007bff;
     color: white;
-    margin-right: 10px;
+    transition: background-color 0.3s;
   }
   
   .btn-primary:hover {
-    background: #0056b3;
+    background-color: #0056b3;
   }
   
   .btn-secondary {
-    background: #6c757d;
+    background-color: #6c757d;
     color: white;
+    transition: background-color 0.3s;
   }
   
   .btn-secondary:hover {
-    background: #5a6268;
+    background-color: #5a6268;
   }
   

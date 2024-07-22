@@ -1,4 +1,4 @@
-   <div class="form-container">
+   <!-- <div class="form-container">
     <mat-card class="form-card">
       <h4>Manage your tasks today!</h4>
       <br>
@@ -16,6 +16,33 @@
             <input matInput type="password" [(ngModel)]="password" name="password" required>
           </mat-form-field>
           <button mat-raised-button color="primary" class="full-width ">Sign In</button>
+        </form>
+      </div>
+    </mat-card>
+    <div class="img">
+      <img src="assets/login.jpg" alt="Sign In Illustration">
+    </div>
+  </div>
+   -->
+   <div class="form-container">
+    <mat-card class="form-card">
+      <h4>Manage your tasks today!</h4>
+      <br>
+      <mat-card-title>Welcome Back!</mat-card-title>
+      <p>New to Untitled? <span> Create an account. </span></p>
+      <br>
+      <div class="form">
+        <form (ngSubmit)="signin()">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Username</mat-label>
+            <input matInput [(ngModel)]="username" name="username" required>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Password</mat-label>
+            <input matInput type="password" [(ngModel)]="password" name="password" required>
+          </mat-form-field>
+          <button mat-raised-button color="primary" class="full-width">Sign In</button>
+          <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
         </form>
       </div>
     </mat-card>

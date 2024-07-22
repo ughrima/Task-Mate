@@ -1,6 +1,7 @@
+
 // import { Component, OnInit } from '@angular/core';
-// import { TaskService } from '../task.service';
-// import { Task } from '../task.model';
+// import { ProjectService } from '../project.service';
+// import { Project, Task } from '../task.model';
 
 // @Component({
 //   selector: 'app-dashboard',
@@ -8,36 +9,50 @@
 //   styleUrls: ['./dashboard.component.css']
 // })
 // export class DashboardComponent implements OnInit {
-//   tasks: Task[] = [];
+//   projects: Project[] = [];
+//   isModalOpen = false;
+//   completedTasksCount: number = 0;
 
-//   constructor(private taskService: TaskService) { }
+//   constructor(private projectService: ProjectService) {}
 
-//   ngOnInit(): void {
-//     this.loadTasks();
+//   ngOnInit() {
+//     this.loadProjects();
 //   }
 
-//   loadTasks(): void {
-//     this.taskService.getTasks().subscribe(tasks => {
-//       this.tasks = tasks;
-//     });
+//   loadProjects() {
+//     this.projectService.getProjects().subscribe(
+//       (projects) => {
+//         this.projects = projects;
+//         this.calculateCompletedTasks();
+//       },
+//       (error) => {
+//         console.error('Error loading projects:', error);
+//       }
+//     );
 //   }
 
-//   deleteTask(id: number): void {
-//     this.taskService.deleteTask(id).subscribe(() => {
-//       this.tasks = this.tasks.filter(task => task.id !== id);
-//     });
+//   openAddProjectModal() {
+//     this.isModalOpen = true;
 //   }
 
-//   completeTask(task: Task): void {
-//     task.completed = true;
-//     this.taskService.updateTask(task.id!, task).subscribe();
+//   closeAddProjectModal() {
+//     this.isModalOpen = false;
+//   }
+
+//   onProjectAdded(project: Project) {
+//     this.projects.push(project);
+//     this.calculateCompletedTasks();
+//     this.closeAddProjectModal();
+//   }
+
+//   calculateCompletedTasks() {
+//     this.completedTasksCount = this.projects.reduce((count, project) => {
+//       return count + project.tasks.filter((task: Task) => task.completed).length;
+//     }, 0);
 //   }
 // }
-
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { AddProjectModalComponent } from '../add-project-modal/add-project-modal.component';
-import { TaskService } from '../task.service';
+import { ProjectService } from '../project.service';
 import { Project } from '../task.model';
 
 @Component({
@@ -47,40 +62,47 @@ import { Project } from '../task.model';
 })
 export class DashboardComponent implements OnInit {
   projects: Project[] = [];
-  completedTasksCount: number = 0;
+  isModalOpen = false;
 
-  constructor(private taskService: TaskService, private dialog: MatDialog) { }
+  constructor(private projectService: ProjectService) { }
 
   ngOnInit(): void {
     this.loadProjects();
   }
 
   loadProjects(): void {
-    this.taskService.getProjects().subscribe((projects: Project[]) => {
-      this.projects = projects;
-      this.calculateCompletedTasks();
-    });
-  }
-
-  calculateCompletedTasks(): void {
-    let count = 0;
-    this.projects.forEach(project => {
-      project.tasks.forEach(task => {
-        if (task.completed) count++;
-      });
-    });
-    this.completedTasksCount = count;
+    this.projectService.getProjects().subscribe(
+      (projects) => {
+        this.projects = projects;
+      },
+      (error) => {
+        console.error('Error loading projects:', error);
+      }
+    );
   }
 
   openAddProjectModal(): void {
-    const dialogRef = this.dialog.open(AddProjectModalComponent, {
-      width: '300px'
-    });
+    this.isModalOpen = true;
+  }
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.loadProjects();
-      }
+  closeAddProjectModal(): void {
+    this.isModalOpen = false;
+  }
+
+  onProjectAdded(project: Project): void {
+    this.projects.push(project);
+    this.closeAddProjectModal();
+  }
+
+  get completedTasksCount(): number {
+    let count = 0;
+    this.projects.forEach(project => {
+      project.tasks.forEach(task => {
+        if (task.completed) {
+          count++;
+        }
+      });
     });
+    return count;
   }
 }
