@@ -1,0 +1,75 @@
+:root {
+    --primary-color: #007BFF;
+    --secondary-color: #40E0D0;
+    --accent-color-orange: #FF4500;
+    --accent-color-yellow: #FFD700;
+    --light-gray: #F5F5F5;
+    --medium-gray: hsl(0, 0%, 80%);
+    --dark-gray: #333333;
+    --white: #FFFFFF;
+  }
+  
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #b9b9b9;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .form-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 70vh;
+    margin: 10vh 20vh;
+    padding: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .form-card {
+    width: 65%;
+    max-width: 500px;
+    padding: 40px;
+    height: 50vh;
+    background-color: #f1f1f1;
+    color: rgb(0, 0, 0);
+    margin-left: 100px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  }
+  .form-card span {
+    color: purple;
+  }
+  
+  .img {
+    width: 45%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 100px;
+  }
+  
+  .img img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px; /* Optional: add some border radius */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow for depth */
+  }
+  
+  .full-width {
+    width: 100%;
+  }
+  
+  button.mat-raised-button {
+    background-color: #000000;
+    color: white;
+  }
+  
+  button.mat-raised-button:hover {
+    background-color: #007BFF;
+  }
+  

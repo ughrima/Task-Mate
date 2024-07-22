@@ -1,4 +1,28 @@
 <div>
-  <h1>{{ title }}</h1>
+  <!-- Default Navbar -->
+  <nav *ngIf="!isDashboardRoute" style="display: flex; justify-content: space-between; align-items: center; padding: 20px 40px; background-color: #FFFFFF; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+    <div class="logo">
+      <a href="#" style="text-decoration: none; font-size: 1.5em; font-weight: bold; color: #000000;">Task Manager</a>
+    </div>
+    <ul style="list-style: none; display: flex; margin: 0; padding: 0;">
+      <li style="margin-left: 20px;"><a href="#" style="text-decoration: none; color: #000000; font-weight: bold;">Home</a></li>
+      <li style="margin-left: 20px;"><a href="signin" style="padding: 10px 20px; border-radius: 5px; color: #FFFFFF; background-color: #000000; text-decoration: none;">Log In</a></li>
+      <li style="margin-left: 20px;"><a href="signup" style="padding: 10px 20px; border-radius: 5px; color: #FFFFFF; background-color: #FFA500; text-decoration: none;">Sign Up</a></li>
+    </ul>
+  </nav>
+
+  <!-- Dashboard Navbar -->
+  <nav *ngIf="isDashboardRoute" style="display: flex; justify-content: space-between; align-items: center; padding: 20px 40px; background-color: #FFFFFF; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+    <div class="logo">
+      <h1 style="margin: 0; font-size: 1.5em; font-weight: bold; color: #FF5722;">Task Manager</h1>
+    </div>
+    <ul style="list-style: none; display: flex; margin: 0; padding: 0;">
+      <li style="margin-left: 20px;"><a routerLink="/dashboard" style="text-decoration: none; color: #000000; font-weight: bold;">Dashboard</a></li>
+      <!-- <li style="margin-left: 20px;"><a routerLink="/add-task" style="text-decoration: none; color: #000000; font-weight: bold;">Add Task</a></li> -->
+      <li style="margin-left: 20px;"><a routerLink="/profile" style="text-decoration: none; color: #000000; font-weight: bold;">Profile</a></li>
+      <li style="margin-left: 20px;"><a href="#" class="logout-button" style="padding: 10px 20px; border-radius: 5px; color: #FFFFFF; background-color: #FF5722; text-decoration: none;">Logout</a></li>
+    </ul>
+  </nav>
+
   <router-outlet></router-outlet>
 </div>

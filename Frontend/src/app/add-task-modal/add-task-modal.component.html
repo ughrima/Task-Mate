@@ -1,0 +1,12 @@
+<div class="modal">
+    <div class="modal-content">
+      <h2>Add Task</h2>
+      <label>Title:</label>
+      <input [(ngModel)]="task.title" />
+      <label>Description:</label>
+      <input [(ngModel)]="task.description" />
+      <button (click)="saveTask()">Save</button>
+      <button (click)="close.emit()">Close</button>
+    </div>
+  </div>
+  

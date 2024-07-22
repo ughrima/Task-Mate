@@ -8,7 +8,6 @@ import com.task.Task_Management_App.dto.JwtAuthenticationResponse;
 import com.task.Task_Management_App.dto.RefreshTokenRequest;
 import com.task.Task_Management_App.dto.SignInRequest;
 import com.task.Task_Management_App.dto.SignUpRequest;
-import com.task.Task_Management_App.entities.Role;
 
 import java.util.HashMap;
 
@@ -32,7 +31,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         User user = new User();
         user.setEmail(signUpRequest.getEmail());
         user.setUsername(signUpRequest.getUsername());
-        user.setRole(Role.USER);
         user.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
         return userRepository.save(user);
     }

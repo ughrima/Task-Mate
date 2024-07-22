@@ -53,10 +53,10 @@ public class SecurityConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.addAllowedOrigin("http://localhost:4200"); // Allow the Angular app origin
+        config.addAllowedOrigin("http://localhost:4200");
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
-        source.registerCorsConfiguration("/**", config); // Apply to all endpoints
+        source.registerCorsConfiguration("/**", config); 
         return new CorsFilter(source);
     }
 
@@ -64,10 +64,10 @@ public class SecurityConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.addAllowedOrigin("http://localhost:4200"); // Allow the Angular app origin
+        config.addAllowedOrigin("http://localhost:4200"); 
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
-        source.registerCorsConfiguration("/**", config); // Apply to all endpoints
+        source.registerCorsConfiguration("/**", config); 
         return source;
     }
 }

@@ -1,14 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { SignupComponent } from './signup/signup.component';
-import { SigninComponent } from './signin/signin.component';
 import { HomeComponent } from './home/home.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { SigninComponent } from './signin/signin.component';
+import { SignupComponent } from './signup/signup.component';
+import { ProjectComponent } from './project/project.component';
+
+
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'signup', component: SignupComponent },
+  { path: 'dashboard', component: DashboardComponent },
+  { path: 'profile', loadComponent: () => import('./profile/profile.component').then(m => m.ProfileComponent) }, // Import as standalone
   { path: 'signin', component: SigninComponent },
-  { path: '**', redirectTo: '', pathMatch: 'full' }
+  { path: 'signup', component: SignupComponent },
+  { path: 'project/:id', component: ProjectComponent }
+
 ];
 
 @NgModule({

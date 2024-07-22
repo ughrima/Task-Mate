@@ -1,0 +1,31 @@
+<!-- <div class="modal">
+    <div class="modal-content">
+      <h2>Add Project</h2>
+      <label>Name:</label>
+      <input [(ngModel)]="project.name" />
+      <label>Description:</label>
+      <input [(ngModel)]="project.description" />
+      <button (click)="saveProject()">Save</button>
+      <button (click)="close.emit()">Close</button>
+    </div>
+  </div>
+   -->
+
+   <div class="modal-overlay">
+    <div class="modal-content">
+      <h2>Add Project</h2>
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input id="name" [(ngModel)]="project.name" />
+      </div>
+      <div class="form-group">
+        <label for="description">Description:</label>
+        <input id="description" [(ngModel)]="project.description" />
+      </div>
+      <div class="modal-actions">
+        <button (click)="saveProject()" class="btn btn-primary">Save</button>
+        <button (click)="close.emit()" class="btn btn-secondary">Close</button>
+      </div>
+    </div>
+  </div>
+  
