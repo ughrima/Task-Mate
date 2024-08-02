@@ -23,7 +23,8 @@ import { AuthInterceptor } from './auth.interceptor';
 import { AuthGuard } from './auth.gaurd';
 import { AuthService } from './auth.service';
 
-
+import { HomeComponent } from './home/home.component';
+import { MatChipsModule } from '@angular/material/chips';  // Import MatChipsModule
 
 @NgModule({
   declarations: [
@@ -34,7 +35,9 @@ import { AuthService } from './auth.service';
     AddTaskModalComponent,
     TaskComponent,
     SigninComponent,
-    SignupComponent
+    SignupComponent,
+    HomeComponent
+
   ],
   imports: [
     BrowserModule,
@@ -46,7 +49,8 @@ import { AuthService } from './auth.service';
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
-    MatDialogModule
+    MatDialogModule,
+    MatChipsModule
   ],
   providers: [
     AuthService,

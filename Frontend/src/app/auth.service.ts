@@ -1,73 +1,53 @@
-// import { Injectable } from '@angular/core';
-// import { HttpClient } from '@angular/common/http';
-// import { Observable } from 'rxjs';
-
-// interface SignInData {
-//   username: string;
-//   password: string;
-// }
-
-// interface SignUpData {
-//   email: string;
-//   username: string;
-//   password: string;
-// }
-
-// interface AuthResponse {
-//   token: string;
-//   refreshToken: string;
-// }
-
-// @Injectable({
-//   providedIn: 'root'
-// })
-// export class AuthService {
-//   private baseUrl = 'http://localhost:8080/api/v1/auth';
-
-//   constructor(private http: HttpClient) {}
-
-//   signIn(data: SignInData): Observable<AuthResponse> {
-//     return this.http.post<AuthResponse>(`${this.baseUrl}/signin`, data);
-//   }
-
-//   signUp(data: SignUpData): Observable<any> {
-//     return this.http.post<any>(`${this.baseUrl}/signup`, data);
-//   }
-// }
-
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-
-interface SignInData {
-  username: string;
-  password: string;
-}
-
-interface SignUpData {
-  email: string;
-  username: string;
-  password: string;
-}
-
-interface AuthResponse {
-  token: string;
-  refreshToken: string;
-}
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private baseUrl = 'http://localhost:8080/api/v1/auth';
+  private apiUrl = 'http://localhost:8080/api/v1/auth';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
-  signIn(data: SignInData): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.baseUrl}/signin`, data);
+  signIn(credentials: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/signin`, credentials)
+      .pipe(
+        catchError(this.handleError)
+      );
   }
 
-  signUp(data: SignUpData): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/signup`, data);
+  refreshToken(): Observable<any> {
+    const refreshToken = localStorage.getItem('refreshToken');
+    return this.http.post(`${this.apiUrl}/refresh`, { token: refreshToken })
+      .pipe(
+        catchError(this.handleError)
+      );
   }
+
+  private handleError(error: HttpErrorResponse): Observable<never> {
+    return throwError(error);
+  }
+
+  getAccessToken(): string | null {
+    return localStorage.getItem('token');
+  }
+
+  storeTokens(token: string, refreshToken: string): void {
+    localStorage.setItem('token', token);
+    localStorage.setItem('refreshToken', refreshToken);
+  }
+
+  signUp(credentials: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/signup`, credentials)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  logout(): void {
+    localStorage.removeItem('token');
+    localStorage.removeItem('refreshToken');  }
 }
+

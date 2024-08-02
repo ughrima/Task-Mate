@@ -1,18 +1,48 @@
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { AuthService } from './auth.service';
+import { catchError, switchMap } from 'rxjs/operators';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token = localStorage.getItem('token');
+
+  constructor(private authService: AuthService) { }
+
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    const token = this.authService.getAccessToken();
+    let authReq = req;
     if (token) {
-      request = request.clone({
-        setHeaders: {
-          Authorization: `Bearer ${token}`
-        }
-      });
+      authReq = this.addToken(req, token);
     }
-    return next.handle(request);
+    return next.handle(authReq).pipe(
+      catchError(error => {
+        if (error.status === 401) {
+          // Handle token refresh
+          return this.authService.refreshToken().pipe(
+            switchMap((response: any) => {
+              this.authService.storeTokens(response.token, response.refreshToken); // Store new tokens
+              authReq = this.addToken(req, response.token);
+              return next.handle(authReq);
+            }),
+            catchError(refreshError => {
+              // Handle refresh token failure
+              this.authService.logout();
+              return throwError(refreshError);
+            })
+          );
+        } else {
+          return throwError(error);
+        }
+      })
+    );
+  }
+
+  private addToken(req: HttpRequest<any>, token: string) {
+    return req.clone({
+      setHeaders: {
+        Authorization: `Bearer ${token}`
+      }
+    });
   }
 }

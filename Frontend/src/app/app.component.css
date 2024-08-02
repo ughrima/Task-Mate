@@ -1,55 +1,76 @@
-/* body {
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 40px;
-    background-color: #FFFFFF;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .logo a {
-    text-decoration: none;
-    font-size: 1.5em;
-    font-weight: bold;
-    color: #000000;
-  }
-  
-  .nav-links {
-    list-style: none;
-    display: flex;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .nav-links li {
-    margin-left: 20px;
-  }
-  
-  .nav-links a {
-    text-decoration: none;
-    color: #000000;
-    font-weight: bold;
-  }
-  
-  .login-button,
-  .signup-button {
-    padding: 10px 20px;
-    border-radius: 5px;
-    color: #FFFFFF;
-    text-decoration: none;
-  }
-  
-  .login-button {
-    background-color: #000000;
-  }
-  
-  .signup-button {
-    background-color: #FFA500;
-  }
-   */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Logo Styles */
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo-img {
+  width: 50px; /* Adjust width as needed */
+}
+
+.navbar-logo, .dashboard-logo {
+  text-decoration: none;
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #000000;
+  margin-left: 10px;
+  font-family: "Inter", sans-serif;
+}
+
+.dashboard-logo {
+  color: #FF5722;
+}
+
+/* Navbar Links */
+.navbar-list {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-link {
+  margin-left: 20px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  color: #FFFFFF;
+}
+
+/* Specific Link Styles */
+.home-link {
+  background-color: #FFDD64;
+  color: #000000; /* Ensure text is readable on the yellow background */
+}
+
+.login-link, .signup-link {
+  background-color: #0098f1;
+}
+
+.signup-link:hover, .login-link:hover {
+  background-color: #003083;
+}
+
+.logout-button {
+  background-color: #FF5722;
+}
+
+.logout-button:hover {
+  background-color: #e64a19;
+}
+
+/* Active Link State */
+.navbar-list a:active {
+  background-color: #142d4b;
+}
+
+

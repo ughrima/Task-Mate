@@ -1,31 +1,25 @@
-<div class="form-container">
-<mat-card class="form-card">
-  <h4>Join us today!</h4>
-  <br>
-  <mat-card-title>Sign Up</mat-card-title>
-  <p>Already have an account?<span> Sign in here. </span></p>
-  <br>
-  <div class="form">
-    <form (ngSubmit)="signup()">
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Email</mat-label>
-        <input matInput placeholder="Enter your email" [(ngModel)]="email" name="email" required>
-      </mat-form-field>
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Username</mat-label>
-        <input matInput [(ngModel)]="username" name="username" required>
-      </mat-form-field>
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Password</mat-label>
-        <input matInput type="password" [(ngModel)]="password" name="password" required>
-      </mat-form-field>
-      <button mat-raised-button color="primary" class="full-width">Sign Up</button>
-    </form>
+
+<div class="signup">
+  <div class="col1">
+    <h1>Join us today!</h1>
+    <p>Already have an account?<span> Sign in here. </span></p>
+    <form class="form" (ngSubmit)="signup()">
+    
+        <label class="label">Email</label>
+        <input class="input"  [(ngModel)]="email" name="email" required>
+      
+        <label class="label">Username</label>
+        <input class="input" [(ngModel)]="username"  name="username" required>
+      
+        <label class="label">Password</label>
+        <input class="input" type="password"   [(ngModel)]="password" name="password" required>
+        <button class="button">Sign Up</button>
+
+      </form>
   </div>
-</mat-card>
-<div class="img">
-  <img src="assets/signup.jpg" alt="Sign Up Illustration">
-</div>
+  <div class="col2">
+    <img src="../../assets/signupjpg">
+  </div>
 </div>
 
 
