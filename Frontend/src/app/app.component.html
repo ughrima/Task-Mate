@@ -1,8 +1,8 @@
 
 
-<div>
+<!-- <div> -->
   <!-- Default Navbar -->
-  <nav *ngIf="!isDashboardRoute" class="navbar">
+  <!-- <nav *ngIf="!isDashboardRoute" class="navbar">
     <div class="logo">
       <img src="../assets/logo.jpg" class="logo-img">
       <a href="../" class="navbar-logo">Task Mate</a>
@@ -12,18 +12,46 @@
       <li><a href="signin" class="navbar-link login-link">Sign In</a></li>
       <li><a href="signup" class="navbar-link signup-link">Sign Up</a></li>
     </ul>
-  </nav>
+  </nav> -->
 
   <!-- Dashboard Navbar -->
-  <nav *ngIf="isDashboardRoute" class="navbar">
+  <!-- <nav *ngIf="isDashboardRoute" class="navbar">
     <div class="logo">
       <h1 class="dashboard-logo">Hi User! </h1>
     </div>
     <ul class="navbar-list">
       <li><a routerLink="/dashboard" class="navbar-link">Dashboard</a></li>
-      <!-- <li><a routerLink="/add-task" class="navbar-link">Add Task</a></li> -->
       <li><a routerLink="/profile" class="navbar-link">Profile</a></li>
       <li><a href="#" class="navbar-link logout-button">Logout</a></li>
+    </ul>
+  </nav>
+
+  <router-outlet></router-outlet>
+</div> -->
+
+<div>
+  <!-- Default Navbar -->
+  <nav *ngIf="!isDashboardRoute" class="navbar">
+    <div class="logo">
+      <img src="../assets/logo.jpg" class="logo-img">
+      <a routerLink="/" class="navbar-logo">Task Mate</a>
+    </div>
+    <ul class="navbar-list">
+      <li><a routerLink="/" class="navbar-link home-link">Home</a></li>
+      <li><a routerLink="/signin" class="navbar-link login-link">Sign In</a></li>
+      <li><a routerLink="/signup" class="navbar-link signup-link">Sign Up</a></li>
+    </ul>
+  </nav>
+
+  <!-- Dashboard Navbar -->
+  <nav *ngIf="isDashboardRoute" class="navbar">
+    <div class="logo">
+      <h1 class="dashboard-logo">Hi, {{ getUsername() }}!</h1>
+    </div>
+    <ul class="navbar-list">
+      <li><a routerLink="/dashboard" class="navbar-link">Dashboard</a></li>
+      <li><a routerLink="/profile" class="navbar-link">Profile</a></li>
+      <li><a href="#" (click)="signOut()" class="navbar-link logout-button">Logout</a></li>
     </ul>
   </nav>
 

@@ -15,7 +15,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 import lombok.RequiredArgsConstructor;
 
-
 // @Configuration
 // @EnableWebSecurity
 // @RequiredArgsConstructor
@@ -72,6 +71,7 @@ import lombok.RequiredArgsConstructor;
 //         return source;
 //     }
 // }
+
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor

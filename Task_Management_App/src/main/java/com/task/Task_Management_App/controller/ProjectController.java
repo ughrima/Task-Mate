@@ -1,9 +1,12 @@
 
+
 // package com.task.Task_Management_App.controller;
 
 // import com.task.Task_Management_App.entities.Project;
+// import com.task.Task_Management_App.entities.Task;
 // import com.task.Task_Management_App.entities.User;
 // import com.task.Task_Management_App.service.ProjectService;
+// import com.task.Task_Management_App.service.TaskService;
 // import com.task.Task_Management_App.service.UserService;
 // import org.springframework.beans.factory.annotation.Autowired;
 // import org.springframework.web.bind.annotation.*;
@@ -17,6 +20,9 @@
 
 //     @Autowired
 //     private ProjectService projectService;
+
+//     @Autowired
+//     private TaskService taskService;
 
 //     @Autowired
 //     private UserService userService;
@@ -38,6 +44,11 @@
 //         User user = userService.findById(userId);
 //         project.setUser(user);
 //         return projectService.createProject(project);
+//     }
+
+//     @PostMapping("/{projectId}/tasks")
+//     public Task addTaskToProject(@PathVariable Long projectId, @RequestBody Task task) {
+//         return taskService.createTask(projectId, task);
 //     }
 
 //     @PutMapping("/{id}")
