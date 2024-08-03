@@ -10,4 +10,7 @@ public interface ProjectService {
     Project createProject(Project project);
     Project updateProject(Long id, Project project);
     void deleteProject(Long id);
+    List<Project> getImportantProjects(Long userId);
+    List<Project> getCompleteProjects(Long userId);
+    List<Project> getIncompleteProjects(Long userId);
 }

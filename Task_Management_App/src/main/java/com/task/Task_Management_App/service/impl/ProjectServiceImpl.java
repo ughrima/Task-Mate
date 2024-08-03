@@ -7,10 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
 @Service
 public class ProjectServiceImpl implements ProjectService {
-    
     @Autowired
     private ProjectRepository projectRepository;
 
@@ -35,6 +33,7 @@ public class ProjectServiceImpl implements ProjectService {
         if (existingProject != null) {
             existingProject.setName(project.getName());
             existingProject.setDescription(project.getDescription());
+            existingProject.setImportant(project.isImportant());
             return projectRepository.save(existingProject);
         }
         return null;
@@ -44,4 +43,20 @@ public class ProjectServiceImpl implements ProjectService {
     public void deleteProject(Long id) {
         projectRepository.deleteById(id);
     }
+
+    @Override
+    public List<Project> getImportantProjects(Long userId) {
+        return projectRepository.findAllByUserIdAndImportant(userId, true);
+    }
+
+    @Override
+    public List<Project> getCompleteProjects(Long userId) {
+        return projectRepository.findAllByUserIdAndTasksCompleted(userId);
+    }
+
+    @Override
+    public List<Project> getIncompleteProjects(Long userId) {
+        return projectRepository.findAllByUserIdAndTasksNotCompleted(userId);
+    }
 }
+

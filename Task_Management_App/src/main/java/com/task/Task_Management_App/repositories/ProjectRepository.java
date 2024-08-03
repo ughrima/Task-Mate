@@ -8,4 +8,7 @@ import java.util.List;
 
 public interface ProjectRepository extends JpaRepository<Project, Long> {
     List<Project> findByUserId(Long userId);
+    List<Project> findAllByUserIdAndImportant(Long userId, boolean important);
+    List<Project> findAllByUserIdAndTasksCompleted(Long userId);
+    List<Project> findAllByUserIdAndTasksNotCompleted(Long userId);
 }

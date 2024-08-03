@@ -1,33 +1,28 @@
-<!-- <div class="project">
+<div class="project-card">
+  <div class="project-header">
     <h2>{{ project.name }}</h2>
-    <p>{{ project.description }}</p>
-    <div>Progress: {{ calculateProgress() }}</div>
-    <button (click)="openAddTaskModal()">+ Add Task</button>
-    <app-task *ngFor="let task of project.tasks" [task]="task"></app-task>
-    <app-add-task-modal *ngIf="isModalOpen" (close)="isModalOpen = false" (save)="addTask($event)"></app-add-task-modal>
+    <p class="project-description">{{ project.description }}</p>
   </div>
-   -->
-
-   <div class="project-card">
-    <div class="project-header">
-      <h2>{{ project.name }}</h2>
-      <p>{{ project.description }}</p>
+  <div class="project-tasks">
+    <h3>Tasks</h3>
+    <div *ngFor="let task of project.tasks" class="task-item">
+      <input type="checkbox" [(ngModel)]="task.completed" />
+      <span>{{ task.title }}</span>
     </div>
-    <div class="project-progress">
-      <div>Progress: {{ calculateProgress() }}%</div>
-    </div>
-    <div class="task-list">
-      <h3>Tasks</h3>
-      <div *ngIf="project.tasks.length > 0; else noTasks">
-        <app-task *ngFor="let task of project.tasks" [task]="task"></app-task>
-      </div>
-      <ng-template #noTasks>
-        <p>No tasks added yet.</p>
-      </ng-template>
-    </div>
+    <ng-template #noTasks>
+      <p>No tasks added yet.</p>
+    </ng-template>
+  </div>
+  <div class="project-footer">
+    <p class="project-date">{{ project.createdAt | date }}</p>
     <div class="project-actions">
       <button (click)="openAddTaskModal()" class="btn btn-primary">+ Add Task</button>
+      <i class="edit-icon" (click)="openEditProjectModal()"></i>
+      <i class="delete-icon" (click)="deleteProject(project)"></i>
     </div>
-    <app-add-task-modal *ngIf="isModalOpen" (close)="isModalOpen = false" (save)="addTask($event)"></app-add-task-modal>
+    <span class="project-status" [ngClass]="isProjectComplete(project) ? 'complete' : 'incomplete'">
+      {{ isProjectComplete(project) ? 'Completed' : 'Incomplete' }}
+    </span>
   </div>
-  
+  <app-add-task-modal *ngIf="isModalOpen" [project]="project" (close)="isModalOpen = false" (taskAdded)="addTask($event)"></app-add-task-modal>
+</div>

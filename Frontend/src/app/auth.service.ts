@@ -111,7 +111,5 @@ export class AuthService {
   }
 
   logout(): void {
-    this.signOut();
-    // Add additional logout logic if needed
-  }
+    this.signOut();  }
 }

@@ -1,14 +1,19 @@
 <div class="modal-overlay" (click)="close.emit()">
-    <div class="modal-content" (click)="$event.stopPropagation()">
+  <div class="modal" (click)="$event.stopPropagation()">
+    <div class="modal-content">
       <h2>Add Project</h2>
       <form (ngSubmit)="saveProject()">
         <div class="form-group">
-          <label for="projectName">Project Name</label>
-          <input id="projectName" name="projectName" [(ngModel)]="project.name" placeholder="Enter project name" required />
+          <label for="name">Name:</label>
+          <input id="name" [(ngModel)]="project.name" name="name" required />
         </div>
         <div class="form-group">
-          <label for="projectDescription">Description</label>
-          <textarea id="projectDescription" name="projectDescription" [(ngModel)]="project.description" placeholder="Enter project description" required></textarea>
+          <label for="description">Description:</label>
+          <input id="description" [(ngModel)]="project.description" name="description" required />
+        </div>
+        <div class="form-group">
+          <label for="important">Important:</label>
+          <input type="checkbox" id="important" [(ngModel)]="project.important" name="important" />
         </div>
         <div class="modal-actions">
           <button type="submit" class="btn btn-primary">Save</button>
@@ -17,4 +22,4 @@
       </form>
     </div>
   </div>
-  
+</div>
