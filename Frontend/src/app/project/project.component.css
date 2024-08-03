@@ -1,40 +1,38 @@
 .project-card {
-  background: #f0f8ff;
-  padding: 20px;
+  background: #f9f9f9;
+  border: 1px solid #ddd;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
+  padding: 16px;
+  margin: 16px 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .project-header {
-  background: #d1ffd6;
-  padding: 10px;
-  border-radius: 8px;
-  text-align: center;
-  margin-bottom: 10px;
-}
-
-.project-header h2 {
-  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .project-description {
-  margin: 10px 0;
-  font-style: italic;
+  margin: 0;
+  color: #666;
 }
 
-.project-tasks {
-  margin-bottom: 20px;
+.project-progress {
+  margin: 12px 0;
+}
+
+.task-list {
+  margin: 12px 0;
 }
 
 .task-item {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
 }
 
 .task-item input {
-  margin-right: 10px;
+  margin-right: 8px;
 }
 
 .project-footer {
@@ -44,8 +42,8 @@
 }
 
 .project-date {
-  font-size: 0.9em;
-  color: #888;
+  color: #999;
+  font-size: 12px;
 }
 
 .project-actions {
@@ -53,42 +51,33 @@
   align-items: center;
 }
 
-.btn {
-  padding: 8px 12px;
-  border: none;
+.project-actions .btn {
+  margin-right: 8px;
+}
+
+.edit-icon,
+.delete-icon {
+  cursor: pointer;
+  margin-left: 8px;
+  color: #666;
+}
+
+.edit-icon:hover,
+.delete-icon:hover {
+  color: #333;
+}
+
+.project-status.complete {
+  color: green;
+}
+
+.project-status.incomplete {
+  color: red;
+}
+
+.important-label {
+  background-color: yellow;
+  padding: 4px 8px;
   border-radius: 4px;
-  cursor: pointer;
-}
-
-.btn-primary {
-  background: #007bff;
-  color: white;
-}
-
-.edit-icon::before {
-  content: "\270E"; /* Pencil icon */
-  font-size: 1.2em;
-  margin-right: 10px;
-  cursor: pointer;
-}
-
-.delete-icon::before {
-  content: "\1F5D1"; /* Trash bin icon */
-  font-size: 1.2em;
-  cursor: pointer;
-}
-
-.project-status {
-  padding: 5px 10px;
-  border-radius: 4px;
-  color: white;
-  font-weight: bold;
-}
-
-.complete {
-  background: #28a745;
-}
-
-.incomplete {
-  background: #dc3545;
+  margin-left: 8px;
 }

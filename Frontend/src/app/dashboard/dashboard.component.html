@@ -1,112 +1,56 @@
-<!-- 
+<div class="dashboard-container">
+  <aside class="sidebar">
+    <div class="logo">
+      <img src="../../assets/logo1.png" alt="Task Mate Logo">
+      <h1>Task Mate</h1>
+    </div>
+    <nav class="nav-menu">
+      <a (click)="loadProjects()" class="nav-link"><i class="fas fa-tachometer-alt"></i> All Projects</a>
+      <a (click)="loadCompleteProjects()" class="nav-link"><i class="fas fa-folder"></i> Complete</a>
+      <a (click)="loadIncompleteProjects()" class="nav-link"><i class="fas fa-list"></i> Incomplete</a>
+      <a (click)="loadImportantProjects()" class="nav-link"><i class="fas fa-layer-group"></i> Important</a>
+    </nav>
+  </aside>
+  <main class="main-content">
+    <div class="top-bar">
+      <h2>{{ currentView | titlecase }} Projects</h2>
+      <button class="add-new" (click)="openAddProjectModal()">+ Add New</button>
+    </div>
+    <div class="statistics">
+      <div class="stat">
+        <h3>{{ projects.length }}</h3>
+        <p>Total Projects</p>
+      </div>
+      <div class="stat">
+        <h3>{{ completedTasksCount }}</h3>
+        <p>Tasks Completed</p>
+      </div>
+      <div class="stat">
+        <h3>3</h3>
+        <p>Categories</p>
+      </div>
+    </div>
+    <div class="project-list">
+      <div *ngFor="let project of projects" class="project-item">
+        <h2>{{ project.name }}</h2>
+        <p>Created At: {{ project.createdAt | date }}</p>
+        <div *ngIf="isProjectComplete(project)">
+          <span class="label complete">Complete</span>
+        </div>
+        <div *ngIf="!isProjectComplete(project)">
+          <span class="label incomplete">Incomplete</span>
+        </div>
+        <div *ngIf="project.important">
+          <span class="label important">Important</span>
+        </div>
+        <button (click)="deleteProject(project)">Delete</button>
+        <button (click)="openEditProjectModal(project)">Edit</button>
+        <button (click)="openAddTaskModal(project)">Add Task</button>
+      </div>
+    </div>
 
-    <div class="dashboard-container">
-      <aside class="sidebar">
-        <div class="logo">
-          <img src="../../assets/logo1.png" alt="Task Mate Logo">
-          <h1>Task Mate</h1>
-        </div>
-        <nav class="nav-menu">
-          <a (click)="loadProjects()" class="nav-link"><i class="fas fa-tachometer-alt"></i> All Projects</a>
-          <a (click)="loadCompleteProjects()" class="nav-link"><i class="fas fa-folder"></i> Complete</a>
-          <a (click)="loadIncompleteProjects()" class="nav-link"><i class="fas fa-list"></i> Incomplete</a>
-          <a (click)="loadImportantProjects()" class="nav-link"><i class="fas fa-layer-group"></i> Important</a>
-        </nav>
-      </aside>
-      <main class="main-content">
-        <div class="top-bar">
-          <h2>{{ currentView | titlecase }} Projects</h2>
-          <button class="add-new" (click)="openAddProjectModal()">+ Add New</button>
-        </div>
-        <div class="statistics">
-          <div class="stat">
-            <h3>{{ projects.length }}</h3>
-            <p>Total Projects</p>
-          </div>
-          <div class="stat">
-            <h3>{{ completedTasksCount }}</h3>
-            <p>Tasks Completed</p>
-          </div>
-          <div class="stat">
-            <h3>3</h3>
-            <p>Categories</p>
-          </div>
-        </div>
-        <div class="project-list">
-          <div *ngFor="let project of projects" class="project-item">
-            <h2>{{ project.name }}</h2>
-            <p>Created At: {{ project.createdAt | date }}</p>
-            <div *ngIf="isProjectComplete(project)">
-              <span class="label complete">Complete</span>
-            </div>
-            <div *ngIf="!isProjectComplete(project)">
-              <span class="label incomplete">Incomplete</span>
-            </div>
-            <div *ngIf="project.important">
-              <span class="label important">Important</span>
-            </div>
-            <button (click)="deleteProject(project)">Delete</button>
-            <button (click)="updateProject(project)">Edit</button>
-          </div>
-        </div>
-        <app-add-project-modal *ngIf="isModalOpen" (close)="closeAddProjectModal()" (projectAdded)="onProjectAdded($event)"></app-add-project-modal>
-      </main>
-    </div>
-     -->
-     <div class="dashboard-container">
-      <aside class="sidebar">
-        <div class="logo">
-          <img src="../../assets/logo1.png" alt="Task Mate Logo">
-          <h1>Task Mate</h1>
-        </div>
-        <nav class="nav-menu">
-          <a (click)="loadProjects()" class="nav-link"><i class="fas fa-tachometer-alt"></i> All Projects</a>
-          <a (click)="loadCompleteProjects()" class="nav-link"><i class="fas fa-folder"></i> Complete</a>
-          <a (click)="loadIncompleteProjects()" class="nav-link"><i class="fas fa-list"></i> Incomplete</a>
-          <a (click)="loadImportantProjects()" class="nav-link"><i class="fas fa-layer-group"></i> Important</a>
-        </nav>
-      </aside>
-      <main class="main-content">
-        <div class="top-bar">
-          <h2>{{ currentView | titlecase }} Projects</h2>
-          <button class="add-new" (click)="openAddProjectModal()">+ Add New</button>
-        </div>
-        <div class="statistics">
-          <div class="stat">
-            <h3>{{ projects.length }}</h3>
-            <p>Total Projects</p>
-          </div>
-          <div class="stat">
-            <h3>{{ completedTasksCount }}</h3>
-            <p>Tasks Completed</p>
-          </div>
-          <div class="stat">
-            <h3>3</h3>
-            <p>Categories</p>
-          </div>
-        </div>
-        <div class="project-list">
-          <div *ngFor="let project of projects" class="project-item">
-            <h2>{{ project.name }}</h2>
-            <p>Created At: {{ project.createdAt | date }}</p>
-            <div *ngIf="isProjectComplete(project)">
-              <span class="label complete">Complete</span>
-            </div>
-            <div *ngIf="!isProjectComplete(project)">
-              <span class="label incomplete">Incomplete</span>
-            </div>
-            <div *ngIf="project.important">
-              <span class="label important">Important</span>
-            </div>
-            <button (click)="deleteProject(project)">Delete</button>
-            <button (click)="openEditProjectModal(project)">Edit</button>
-            <button (click)="openAddTaskModal(project)">Add Task</button>
-          </div>
-        </div>
-        <app-add-project-modal *ngIf="isModalOpen" (close)="closeAddProjectModal()" (projectAdded)="onProjectAdded($event)"></app-add-project-modal>
-        <app-edit-project-modal *ngIf="isEditModalOpen" [project]="selectedProject" (close)="closeEditProjectModal()" (projectUpdated)="onProjectUpdated($event)"></app-edit-project-modal>
-        <app-add-task-modal *ngIf="isTaskModalOpen" [project]="selectedProject" (close)="closeAddTaskModal()" (taskAdded)="onTaskAdded($event)"></app-add-task-modal>        
-      </main>
-    </div>
-    
-    
+    <app-add-project-modal *ngIf="isModalOpen" (close)="closeAddProjectModal()" (projectAdded)="onProjectAdded($event)"></app-add-project-modal>
+    <app-edit-project-modal *ngIf="isEditModalOpen" [project]="selectedProject!" (close)="closeEditProjectModal()" (projectUpdated)="onProjectUpdated($event)"></app-edit-project-modal>
+    <app-add-task-modal *ngIf="isTaskModalOpen" [project]="selectedProject!" (close)="closeAddTaskModal()" (taskAdded)="onTaskAdded($event)"></app-add-task-modal>
+  </main>
+</div>

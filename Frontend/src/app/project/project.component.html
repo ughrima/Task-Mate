@@ -3,11 +3,16 @@
     <h2>{{ project.name }}</h2>
     <p class="project-description">{{ project.description }}</p>
   </div>
-  <div class="project-tasks">
+  <div class="project-progress">
+    <p>Progress: {{ calculateProgress() }}</p>
+  </div>
+  <div class="task-list">
     <h3>Tasks</h3>
-    <div *ngFor="let task of project.tasks" class="task-item">
-      <input type="checkbox" [(ngModel)]="task.completed" />
-      <span>{{ task.title }}</span>
+    <div *ngIf="project.tasks.length > 0; else noTasks">
+      <div *ngFor="let task of project.tasks" class="task-item">
+        <input type="checkbox" [(ngModel)]="task.completed" />
+        <span>{{ task.title }}</span>
+      </div>
     </div>
     <ng-template #noTasks>
       <p>No tasks added yet.</p>
@@ -17,12 +22,13 @@
     <p class="project-date">{{ project.createdAt | date }}</p>
     <div class="project-actions">
       <button (click)="openAddTaskModal()" class="btn btn-primary">+ Add Task</button>
-      <i class="edit-icon" (click)="openEditProjectModal()"></i>
-      <i class="delete-icon" (click)="deleteProject(project)"></i>
+      <i class="fas fa-edit edit-icon" (click)="openEditProjectModal()"></i>
+      <i class="fas fa-trash delete-icon" (click)="deleteProject(project)"></i>
     </div>
     <span class="project-status" [ngClass]="isProjectComplete(project) ? 'complete' : 'incomplete'">
       {{ isProjectComplete(project) ? 'Completed' : 'Incomplete' }}
     </span>
+    <span *ngIf="project.important" class="important-label">Important</span>
   </div>
   <app-add-task-modal *ngIf="isModalOpen" [project]="project" (close)="isModalOpen = false" (taskAdded)="addTask($event)"></app-add-task-modal>
 </div>
