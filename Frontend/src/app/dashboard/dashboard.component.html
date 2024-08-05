@@ -33,7 +33,7 @@
     <div class="project-list">
       <div *ngFor="let project of projects" class="project-item">
         <h2>{{ project.name }}</h2>
-        <p>Created At: {{ project.createdAt | date }}</p>
+        <p>Created At: {{ project.createdAt | date:'dd/MM/yy' }}</p>
         <div *ngIf="isProjectComplete(project)">
           <span class="label complete">Complete</span>
         </div>
@@ -43,9 +43,19 @@
         <div *ngIf="project.important">
           <span class="label important">Important</span>
         </div>
-        <button (click)="deleteProject(project)">Delete</button>
-        <button (click)="openEditProjectModal(project)">Edit</button>
+        <button (click)="deleteProject(project)">
+          <i class="fas fa-trash-alt"></i>
+        </button>
+        <button (click)="openEditProjectModal(project)">
+          <i class="fas fa-pen"></i>
+        </button>
         <button (click)="openAddTaskModal(project)">Add Task</button>
+        <div *ngFor="let task of project.tasks" class="task-item">
+          <label>
+            <input type="checkbox" [checked]="task.completed" (change)="updateTaskStatus(task)">
+            {{ task.title }}
+          </label>
+        </div>
       </div>
     </div>
 

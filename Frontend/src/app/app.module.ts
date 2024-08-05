@@ -52,7 +52,8 @@ import { MatChipsModule } from '@angular/material/chips';
     MatInputModule,
     MatDialogModule,
     MatChipsModule,
-    CommonModule
+    CommonModule,
+    
   ],
   providers: [
     AuthService,

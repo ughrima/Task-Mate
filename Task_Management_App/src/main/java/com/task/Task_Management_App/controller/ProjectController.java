@@ -1,5 +1,3 @@
-
-
 package com.task.Task_Management_App.controller;
 
 import com.task.Task_Management_App.entities.Project;
@@ -11,13 +9,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
+
 @RestController
 @RequestMapping("/api/projects")
 public class ProjectController {
 
     @Autowired
     private ProjectService projectService;
-
 
     @Autowired
     private UserService userService;

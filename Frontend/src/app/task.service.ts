@@ -1,38 +1,30 @@
+
+// task.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Project, Task } from './task.model';
+import { Task } from './task.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService {
-  private apiUrl = 'http://localhost:8080/api';
+  private apiUrl = 'http://localhost:8080/api/tasks';
 
-  constructor(private http: HttpClient) { }
-
-  getProjects(): Observable<Project[]> {
-    return this.http.get<Project[]>(`${this.apiUrl}/projects/user`, this.getHttpOptions());
-  }
-
-  addProject(project: Project): Observable<Project> {
-    return this.http.post<Project>(`${this.apiUrl}/projects`, project, this.getHttpOptions());
-  }
+  constructor(private http: HttpClient) {}
 
   getTasksByProjectId(projectId: number): Observable<Task[]> {
-    return this.http.get<Task[]>(`${this.apiUrl}/projects/${projectId}/tasks`, this.getHttpOptions());
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`);
+    return this.http.get<Task[]>(`${this.apiUrl}/project/${projectId}`, { headers });
   }
 
   addTask(projectId: number, task: Task): Observable<Task> {
-    return this.http.post<Task>(`${this.apiUrl}/projects/${projectId}/tasks`, task, this.getHttpOptions());
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`);
+    return this.http.post<Task>(`${this.apiUrl}/project/${projectId}`, task, { headers });
   }
 
-  private getHttpOptions() {
-    return {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-      })
-    };
+  updateTask(taskId: number, task: Task): Observable<Task> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`);
+    return this.http.put<Task>(`${this.apiUrl}/${taskId}`, task, { headers });
   }
 }

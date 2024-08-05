@@ -8,28 +8,13 @@ import { Project } from './task.model';
   providedIn: 'root'
 })
 export class ProjectService {
-  private apiUrl = 'http://localhost:8080/api/projects/user';
+  private apiUrl = 'http://localhost:8080/api/projects';
 
   constructor(private http: HttpClient) {}
 
   getProjects(): Observable<Project[]> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`);
-    return this.http.get<Project[]>(this.apiUrl, { headers });
-  }
-
-  getCompleteProjects(): Observable<Project[]> {
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`);
-    return this.http.get<Project[]>(`${this.apiUrl}/complete`, { headers });
-  }
-
-  getIncompleteProjects(): Observable<Project[]> {
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`);
-    return this.http.get<Project[]>(`${this.apiUrl}/incomplete`, { headers });
-  }
-
-  getImportantProjects(): Observable<Project[]> {
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`);
-    return this.http.get<Project[]>(`${this.apiUrl}/important`, { headers });
+    return this.http.get<Project[]>(`${this.apiUrl}/user`, { headers });
   }
 
   addProject(project: Project): Observable<Project> {
@@ -45,5 +30,20 @@ export class ProjectService {
   updateProject(project: Project): Observable<Project> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`);
     return this.http.put<Project>(`${this.apiUrl}/${project.id}`, project, { headers });
+  }
+
+  getCompleteProjects(): Observable<Project[]> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`);
+    return this.http.get<Project[]>(`${this.apiUrl}/complete`, { headers });
+  }
+
+  getIncompleteProjects(): Observable<Project[]> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`);
+    return this.http.get<Project[]>(`${this.apiUrl}/incomplete`, { headers });
+  }
+
+  getImportantProjects(): Observable<Project[]> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`);
+    return this.http.get<Project[]>(`${this.apiUrl}/important`, { headers });
   }
 }

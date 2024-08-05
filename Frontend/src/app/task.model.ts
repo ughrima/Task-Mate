@@ -3,13 +3,14 @@ export interface Task {
   title: string;
   description: string;
   completed: boolean;
+  project?: Project; // Ensure the project property is included
 }
 
 export interface Project {
-  id?: number | null;
+  id?: number;
   name: string;
   description: string;
-  tasks: Task[];
   important: boolean;
   createdAt: string;
+  tasks: Task[];
 }

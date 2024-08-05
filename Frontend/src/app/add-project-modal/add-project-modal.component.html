@@ -1,25 +1,13 @@
-<div class="modal-overlay" (click)="close.emit()">
-  <div class="modal" (click)="$event.stopPropagation()">
-    <div class="modal-content">
-      <h2>Add Project</h2>
-      <form (ngSubmit)="saveProject()">
-        <div class="form-group">
-          <label for="name">Name:</label>
-          <input id="name" [(ngModel)]="project.name" name="name" required />
-        </div>
-        <div class="form-group">
-          <label for="description">Description:</label>
-          <input id="description" [(ngModel)]="project.description" name="description" required />
-        </div>
-        <div class="form-group">
-          <label for="important">Important:</label>
-          <input type="checkbox" id="important" [(ngModel)]="project.important" name="important" />
-        </div>
-        <div class="modal-actions">
-          <button type="submit" class="btn btn-primary">Save</button>
-          <button type="button" class="btn btn-secondary" (click)="close.emit()">Close</button>
-        </div>
-      </form>
-    </div>
+<div class="modal">
+  <div class="modal-content">
+    <span class="close" (click)="close.emit()">&times;</span>
+    <h2>Add Project</h2>
+    <label for="name">Project Name</label>
+    <input id="name" [(ngModel)]="project.name" required>
+    <label for="description">Description</label>
+    <input id="description" [(ngModel)]="project.description" required>
+    <label for="important">Important</label>
+    <input type="checkbox" id="important" [(ngModel)]="project.important">
+    <button (click)="addProject()">Add Project</button>
   </div>
 </div>

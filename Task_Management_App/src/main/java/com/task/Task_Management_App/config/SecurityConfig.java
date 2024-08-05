@@ -15,63 +15,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 import lombok.RequiredArgsConstructor;
 
-// @Configuration
-// @EnableWebSecurity
-// @RequiredArgsConstructor
-// public class SecurityConfig {
-
-//     private final JWTAuthenticationFilter jwtAuthenticationFilter;
-//     private final AuthenticationProvider authenticationProvider;
-
-//     @Bean
-//     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//         http
-//             .csrf(csrf -> csrf.disable())
-//             .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Enable CORS
-//             .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-//                 .requestMatchers("/api/v1/auth/**").permitAll()
-//                 .requestMatchers("/api/v1/admin/**").hasAuthority("ADMIN")
-//                 .requestMatchers("/api/v1/user/**").hasAuthority("USER")
-//                 .anyRequest().authenticated()
-//             )
-//             .sessionManagement(sessionManagement -> sessionManagement
-//                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//             )
-//             .authenticationProvider(authenticationProvider)
-//             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-
-//         return http.build();
-//     }
-
-//     @Bean
-//     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-//         return config.getAuthenticationManager();
-//     }
-
-//     @Bean
-//     public CorsFilter corsFilter() {
-//         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//         CorsConfiguration config = new CorsConfiguration();
-//         config.setAllowCredentials(true);
-//         config.addAllowedOrigin("http://localhost:4200");
-//         config.addAllowedHeader("*");
-//         config.addAllowedMethod("*");
-//         source.registerCorsConfiguration("/**", config); 
-//         return new CorsFilter(source);
-//     }
-
-//     private UrlBasedCorsConfigurationSource corsConfigurationSource() {
-//         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//         CorsConfiguration config = new CorsConfiguration();
-//         config.setAllowCredentials(true);
-//         config.addAllowedOrigin("http://localhost:4200"); 
-//         config.addAllowedHeader("*");
-//         config.addAllowedMethod("*");
-//         source.registerCorsConfiguration("/**", config); 
-//         return source;
-//     }
-// }
-
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor

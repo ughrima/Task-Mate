@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProjectService } from '../project.service';
+import { TaskService } from '../task.service';
 import { Project, Task } from '../task.model';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
@@ -14,10 +15,17 @@ export class DashboardComponent implements OnInit {
   isModalOpen = false;
   isEditModalOpen = false;
   isTaskModalOpen = false;
+  isEditTaskModalOpen = false;
   selectedProject: Project | null = null;
+  selectedTask: Task | null = null;
   currentView: string = 'all';
 
-  constructor(private projectService: ProjectService, private authService: AuthService, private router: Router) { }
+  constructor(
+    private projectService: ProjectService,
+    private taskService: TaskService,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.loadProjects();
@@ -36,11 +44,11 @@ export class DashboardComponent implements OnInit {
 
   loadCompleteProjects(): void {
     this.projectService.getCompleteProjects().subscribe(
-      (projects) => {
+      (projects: Project[]) => {
         this.projects = projects;
         this.currentView = 'complete';
       },
-      (error) => {
+      (error: any) => {
         console.error('Error loading complete projects:', error);
       }
     );
@@ -48,11 +56,11 @@ export class DashboardComponent implements OnInit {
 
   loadIncompleteProjects(): void {
     this.projectService.getIncompleteProjects().subscribe(
-      (projects) => {
+      (projects: Project[]) => {
         this.projects = projects;
         this.currentView = 'incomplete';
       },
-      (error) => {
+      (error: any) => {
         console.error('Error loading incomplete projects:', error);
       }
     );
@@ -60,11 +68,11 @@ export class DashboardComponent implements OnInit {
 
   loadImportantProjects(): void {
     this.projectService.getImportantProjects().subscribe(
-      (projects) => {
+      (projects: Project[]) => {
         this.projects = projects;
         this.currentView = 'important';
       },
-      (error) => {
+      (error: any) => {
         console.error('Error loading important projects:', error);
       }
     );
@@ -79,10 +87,15 @@ export class DashboardComponent implements OnInit {
   }
 
   onProjectAdded(project: Project): void {
-    if (project) {
-      this.projects.push(project);
-    }
-    this.closeAddProjectModal();
+    this.projectService.addProject(project).subscribe(
+      (savedProject) => {
+        this.projects.push(savedProject);
+        this.closeAddProjectModal();
+      },
+      (error) => {
+        console.error('Error adding project:', error);
+      }
+    );
   }
 
   deleteProject(project: Project): void {
@@ -106,16 +119,24 @@ export class DashboardComponent implements OnInit {
   }
 
   onProjectUpdated(updatedProject: Project): void {
-    const index = this.projects.findIndex(p => p.id === updatedProject.id);
-    if (index !== -1) {
-      this.projects[index] = updatedProject;
-    }
-    this.closeEditProjectModal();
+    this.projectService.updateProject(updatedProject).subscribe(
+      (savedProject) => {
+        const index = this.projects.findIndex(p => p.id === savedProject.id);
+        if (index !== -1) {
+          this.projects[index] = savedProject;
+        }
+        this.closeEditProjectModal();
+      },
+      (error) => {
+        console.error('Error updating project:', error);
+      }
+    );
   }
 
   openAddTaskModal(project: Project): void {
     this.selectedProject = project;
     this.isTaskModalOpen = true;
+    this.loadTasks(project.id!);
   }
 
   closeAddTaskModal(): void {
@@ -124,9 +145,61 @@ export class DashboardComponent implements OnInit {
 
   onTaskAdded(task: Task): void {
     if (this.selectedProject) {
-      this.selectedProject.tasks.push(task);
-      this.isTaskModalOpen = false;
+      this.taskService.addTask(this.selectedProject.id!, task).subscribe(
+        (savedTask) => {
+          this.selectedProject!.tasks.push(savedTask);
+          this.closeAddTaskModal();
+        },
+        (error) => {
+          console.error('Error adding task:', error);
+        }
+      );
     }
+  }
+
+  openEditTaskModal(task: Task): void {
+    this.selectedTask = task;
+    this.isEditTaskModalOpen = true;
+  }
+
+  closeEditTaskModal(): void {
+    this.isEditTaskModalOpen = false;
+  }
+
+  onTaskUpdated(updatedTask: Task): void {
+    const project = this.projects.find(p => p.id === updatedTask.project?.id);
+    if (project) {
+      const index = project.tasks.findIndex(t => t.id === updatedTask.id);
+      if (index !== -1) {
+        project.tasks[index] = updatedTask;
+      }
+    }
+    this.closeEditTaskModal();
+  }
+
+  loadTasks(projectId: number): void {
+    this.taskService.getTasksByProjectId(projectId).subscribe(
+      (tasks) => {
+        const project = this.projects.find(p => p.id === projectId);
+        if (project) {
+          project.tasks = tasks;
+        }
+      },
+      (error) => {
+        console.error('Error loading tasks:', error);
+      }
+    );
+  }
+
+  updateTaskStatus(task: Task): void {
+    this.taskService.updateTask(task.id!, task).subscribe(
+      (updatedTask: Task) => {
+        task.completed = updatedTask.completed;
+      },
+      (error: any) => {
+        console.error('Error updating task status:', error);
+      }
+    );
   }
 
   signOut(): void {
