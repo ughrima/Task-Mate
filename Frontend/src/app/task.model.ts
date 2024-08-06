@@ -1,10 +1,10 @@
 export interface Task {
   id?: number;
   title: string;
-  description: string;
   completed: boolean;
-  project?: Project; // Ensure the project property is included
+  project?: Project; 
 }
+
 
 export interface Project {
   id?: number;
@@ -13,4 +13,7 @@ export interface Project {
   important: boolean;
   createdAt: string;
   tasks: Task[];
+  completed?: boolean; 
+  headerColor?: string; 
 }
+

@@ -1,11 +1,16 @@
-<div class="modal">
-  <div class="modal-content">
-    <span class="close" (click)="close.emit()">&times;</span>
-    <h2>Add Task</h2>
-    <label for="title">Task Title</label>
-    <input id="title" [(ngModel)]="task.title" required>
-    <label for="description">Description</label>
-    <input id="description" [(ngModel)]="task.description" required>
-    <button (click)="addTask()">Add Task</button>
+<div class="modal-overlay" (click)="close.emit()">
+  <div class="modal" (click)="$event.stopPropagation()">
+    <div class="modal-content">
+      <span class="close" (click)="close.emit()">&times;</span>
+      <h2>Add Task</h2>
+      <div class="form-group">
+        <label for="title">Task Title</label>
+        <input id="title" [(ngModel)]="task.title" required>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" (click)="close.emit()">Cancel</button>
+        <button class="btn btn-primary" (click)="addTask()">Add Task</button>
+      </div>
+    </div>
   </div>
 </div>

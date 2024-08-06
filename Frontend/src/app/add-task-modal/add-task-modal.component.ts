@@ -13,7 +13,6 @@ export class AddTaskModalComponent {
 
   task: Task = {
     title: '',
-    description: '',
     completed: false,
     project: this.project
   };

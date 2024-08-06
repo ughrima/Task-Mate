@@ -34,7 +34,10 @@ export class DashboardComponent implements OnInit {
   loadProjects(): void {
     this.projectService.getProjects().subscribe(
       (projects) => {
-        this.projects = projects;
+        this.projects = projects.map(project => ({
+          ...project,
+          headerColor: this.getRandomColor()
+        }));
       },
       (error) => {
         console.error('Error loading projects:', error);
@@ -42,10 +45,18 @@ export class DashboardComponent implements OnInit {
     );
   }
 
+  getRandomColor(): string {
+    const colors = ['#ff9999', '#66b3ff', '#99ff99', '#ffcc99', '#c2c2f0', '#ffb3e6', '#c4e17f'];
+    return colors[Math.floor(Math.random() * colors.length)];
+  }
+
   loadCompleteProjects(): void {
     this.projectService.getCompleteProjects().subscribe(
       (projects: Project[]) => {
-        this.projects = projects;
+        this.projects = projects.map(project => ({
+          ...project,
+          headerColor: this.getRandomColor()
+        }));
         this.currentView = 'complete';
       },
       (error: any) => {
@@ -57,7 +68,10 @@ export class DashboardComponent implements OnInit {
   loadIncompleteProjects(): void {
     this.projectService.getIncompleteProjects().subscribe(
       (projects: Project[]) => {
-        this.projects = projects;
+        this.projects = projects.map(project => ({
+          ...project,
+          headerColor: this.getRandomColor()
+        }));
         this.currentView = 'incomplete';
       },
       (error: any) => {
@@ -69,7 +83,10 @@ export class DashboardComponent implements OnInit {
   loadImportantProjects(): void {
     this.projectService.getImportantProjects().subscribe(
       (projects: Project[]) => {
-        this.projects = projects;
+        this.projects = projects.map(project => ({
+          ...project,
+          headerColor: this.getRandomColor()
+        }));
         this.currentView = 'important';
       },
       (error: any) => {
@@ -89,6 +106,7 @@ export class DashboardComponent implements OnInit {
   onProjectAdded(project: Project): void {
     this.projectService.addProject(project).subscribe(
       (savedProject) => {
+        savedProject.headerColor = this.getRandomColor();
         this.projects.push(savedProject);
         this.closeAddProjectModal();
       },
@@ -123,6 +141,7 @@ export class DashboardComponent implements OnInit {
       (savedProject) => {
         const index = this.projects.findIndex(p => p.id === savedProject.id);
         if (index !== -1) {
+          savedProject.headerColor = this.projects[index].headerColor;
           this.projects[index] = savedProject;
         }
         this.closeEditProjectModal();
@@ -149,6 +168,7 @@ export class DashboardComponent implements OnInit {
         (savedTask) => {
           this.selectedProject!.tasks.push(savedTask);
           this.closeAddTaskModal();
+          this.updateProjectCompletionStatus(this.selectedProject!);
         },
         (error) => {
           console.error('Error adding task:', error);
@@ -173,6 +193,7 @@ export class DashboardComponent implements OnInit {
       if (index !== -1) {
         project.tasks[index] = updatedTask;
       }
+      this.updateProjectCompletionStatus(project);
     }
     this.closeEditTaskModal();
   }
@@ -195,11 +216,20 @@ export class DashboardComponent implements OnInit {
     this.taskService.updateTask(task.id!, task).subscribe(
       (updatedTask: Task) => {
         task.completed = updatedTask.completed;
+  
+        if (this.selectedProject) {
+          this.selectedProject.completed = this.isProjectComplete(this.selectedProject);
+        }
       },
       (error: any) => {
         console.error('Error updating task status:', error);
       }
     );
+  }
+  
+
+  updateProjectCompletionStatus(project: Project): void {
+    project.completed = project.tasks.every(task => task.completed);
   }
 
   signOut(): void {
@@ -210,7 +240,6 @@ export class DashboardComponent implements OnInit {
   getUsername(): string | null {
     return this.authService.getUsername();
   }
-
   get completedTasksCount(): number {
     let count = 0;
     this.projects.forEach(project => {
@@ -222,9 +251,24 @@ export class DashboardComponent implements OnInit {
     });
     return count;
   }
-
+  
+  get incompletedTasksCount(): number {
+    let count = 0;
+    this.projects.forEach(project => {
+      project.tasks.forEach(task => {
+        if (!task.completed) {
+          count++;
+        }
+      });
+    });
+    return count;
+  }
+  
   isProjectComplete(project: Project): boolean {
     return project.tasks.every(task => task.completed);
   }
 }
+
+
+
 

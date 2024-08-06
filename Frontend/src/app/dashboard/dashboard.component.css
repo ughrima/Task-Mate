@@ -75,8 +75,9 @@
 }
 
 .add-new {
-  background-color: #3498db;
-  color: white;
+  background-color: #85A7FF;
+  color: rgb(0, 0, 0);
+  font-weight:550;
   border: none;
   padding: 0.5rem 1rem;
   font-size: 1rem;
@@ -98,19 +99,22 @@
   padding: 10px;
 }
 
+
+.project-item {
+  margin-left: 20px;
+  background-color: #ffffff;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: calc(42% - 1rem); 
+  position: relative;
+  margin-bottom: 1rem; 
+}
+
 .project-list {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
-}
-
-.project-item {
-  /* background-color: #ffffff; */
-  padding: 1rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: calc(33% - 1rem);
-  position: relative;
 }
 
 .project-header {
@@ -137,6 +141,12 @@
 
 .project-item h2 {
   margin-top: 0;
+}
+
+.project-description {
+  margin: 0.6rem 0.2rem;
+  color: #4b545e;
+  margin-top: 3%;
 }
 
 .project-footer {
@@ -196,8 +206,9 @@
 }
 
 .add-task {
-  background-color: #3498db;
-  color: white;
+  background-color: #85A7FF;
+  color: rgb(10, 8, 8);
+  font-weight:550;
   border: none;
   padding: 0.5rem;
   font-size: 0.9rem;
