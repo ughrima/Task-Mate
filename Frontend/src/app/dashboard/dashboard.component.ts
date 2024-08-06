@@ -227,3 +227,4 @@ export class DashboardComponent implements OnInit {
     return project.tasks.every(task => task.completed);
   }
 }
+
