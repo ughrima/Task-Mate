@@ -1,6 +1,6 @@
 FROM maven:3.8.1-openjdk-17-slim AS build
 WORKDIR /Task-Management-App
-COPY . .
+COPY Task_Management_App .
 RUN mvn clean package -DskipTests
 
 FROM openjdk:17.0-jdk-slim
