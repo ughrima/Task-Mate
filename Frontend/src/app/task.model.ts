@@ -5,7 +5,6 @@ export interface Task {
   project?: Project; 
 }
 
-
 export interface Project {
   id?: number;
   name: string;
@@ -16,4 +15,3 @@ export interface Project {
   completed?: boolean; 
   headerColor?: string; 
 }
-

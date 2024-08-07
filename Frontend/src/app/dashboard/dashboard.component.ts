@@ -36,7 +36,8 @@ export class DashboardComponent implements OnInit {
       (projects) => {
         this.projects = projects.map(project => ({
           ...project,
-          headerColor: this.getRandomColor()
+          headerColor: this.getRandomColor(),
+          completed: this.isProjectComplete(project)
         }));
       },
       (error) => {
@@ -51,9 +52,9 @@ export class DashboardComponent implements OnInit {
   }
 
   loadCompleteProjects(): void {
-    this.projectService.getCompleteProjects().subscribe(
+    this.projectService.getProjects().subscribe(
       (projects: Project[]) => {
-        this.projects = projects.map(project => ({
+        this.projects = projects.filter(project => project.completed).map(project => ({
           ...project,
           headerColor: this.getRandomColor()
         }));
@@ -66,9 +67,9 @@ export class DashboardComponent implements OnInit {
   }
 
   loadIncompleteProjects(): void {
-    this.projectService.getIncompleteProjects().subscribe(
+    this.projectService.getProjects().subscribe(
       (projects: Project[]) => {
-        this.projects = projects.map(project => ({
+        this.projects = projects.filter(project => !project.completed).map(project => ({
           ...project,
           headerColor: this.getRandomColor()
         }));
@@ -81,9 +82,9 @@ export class DashboardComponent implements OnInit {
   }
 
   loadImportantProjects(): void {
-    this.projectService.getImportantProjects().subscribe(
+    this.projectService.getProjects().subscribe(
       (projects: Project[]) => {
-        this.projects = projects.map(project => ({
+        this.projects = projects.filter(project => project.important).map(project => ({
           ...project,
           headerColor: this.getRandomColor()
         }));
@@ -107,6 +108,7 @@ export class DashboardComponent implements OnInit {
     this.projectService.addProject(project).subscribe(
       (savedProject) => {
         savedProject.headerColor = this.getRandomColor();
+        savedProject.completed = this.isProjectComplete(savedProject);
         this.projects.push(savedProject);
         this.closeAddProjectModal();
       },
@@ -142,6 +144,7 @@ export class DashboardComponent implements OnInit {
         const index = this.projects.findIndex(p => p.id === savedProject.id);
         if (index !== -1) {
           savedProject.headerColor = this.projects[index].headerColor;
+          savedProject.completed = this.isProjectComplete(savedProject);
           this.projects[index] = savedProject;
         }
         this.closeEditProjectModal();
@@ -167,8 +170,8 @@ export class DashboardComponent implements OnInit {
       this.taskService.addTask(this.selectedProject.id!, task).subscribe(
         (savedTask) => {
           this.selectedProject!.tasks.push(savedTask);
-          this.closeAddTaskModal();
           this.updateProjectCompletionStatus(this.selectedProject!);
+          this.closeAddTaskModal();
         },
         (error) => {
           console.error('Error adding task:', error);
@@ -204,6 +207,7 @@ export class DashboardComponent implements OnInit {
         const project = this.projects.find(p => p.id === projectId);
         if (project) {
           project.tasks = tasks;
+          this.updateProjectCompletionStatus(project);
         }
       },
       (error) => {
@@ -216,9 +220,9 @@ export class DashboardComponent implements OnInit {
     this.taskService.updateTask(task.id!, task).subscribe(
       (updatedTask: Task) => {
         task.completed = updatedTask.completed;
-  
-        if (this.selectedProject) {
-          this.selectedProject.completed = this.isProjectComplete(this.selectedProject);
+        const project = this.projects.find(p => p.id === task.project?.id);
+        if (project) {
+          this.updateProjectCompletionStatus(project);
         }
       },
       (error: any) => {
@@ -226,10 +230,13 @@ export class DashboardComponent implements OnInit {
       }
     );
   }
-  
 
   updateProjectCompletionStatus(project: Project): void {
     project.completed = project.tasks.every(task => task.completed);
+    const index = this.projects.findIndex(p => p.id === project.id);
+    if (index !== -1) {
+      this.projects[index] = project;
+    }
   }
 
   signOut(): void {
@@ -240,7 +247,16 @@ export class DashboardComponent implements OnInit {
   getUsername(): string | null {
     return this.authService.getUsername();
   }
+
   get completedTasksCount(): number {
+    return this.calculateCompletedTasksCount();
+  }
+
+  get incompletedTasksCount(): number {
+    return this.calculateIncompletedTasksCount();
+  }
+
+  calculateCompletedTasksCount(): number {
     let count = 0;
     this.projects.forEach(project => {
       project.tasks.forEach(task => {
@@ -251,8 +267,8 @@ export class DashboardComponent implements OnInit {
     });
     return count;
   }
-  
-  get incompletedTasksCount(): number {
+
+  calculateIncompletedTasksCount(): number {
     let count = 0;
     this.projects.forEach(project => {
       project.tasks.forEach(task => {
@@ -263,12 +279,8 @@ export class DashboardComponent implements OnInit {
     });
     return count;
   }
-  
+
   isProjectComplete(project: Project): boolean {
     return project.tasks.every(task => task.completed);
   }
 }
-
-
-
-
