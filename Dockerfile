@@ -3,9 +3,8 @@ WORKDIR /build
 COPY Task_Management_App /build
 RUN mvn clean package -DskipTests
 
-
 FROM openjdk:17.0-jdk-slim
 WORKDIR /app
-COPY --from=build Task_Management_App/target/Task_Management_App-0.0.1-SNAPSHOT.jar /app/Task_Management_App.jar
+COPY --from=build /build/target/Task_Management_App-0.0.1-SNAPSHOT.jar /app/Task_Management_App.jar
 EXPOSE 8080
-ENTRYPOINT ["java","-jar",""]ENTRYPOINT ["java", "-jar", "Task_Management_App.jar"]
+ENTRYPOINT ["java", "-jar", "Task_Management_App.jar"]
