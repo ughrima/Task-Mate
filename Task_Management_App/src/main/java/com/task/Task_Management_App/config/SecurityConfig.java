@@ -52,7 +52,7 @@ public class SecurityConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.addAllowedOrigin("https://main--taskmateweb.netlify.app"); // Ensure this matches your frontend URL
+        config.addAllowedOrigin("https://taskmateweb.netlify.app");
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
         source.registerCorsConfiguration("/**", config); 
