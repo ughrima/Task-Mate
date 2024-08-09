@@ -16,7 +16,6 @@ Task Mate is a full-stack web application that offers a complete solution for ta
 - [Future Scope](#future-scope)
 - [Badges](#badges)
 - [Contributing](#contributing)
-- [License](#license)
 
 ## Features
 
