@@ -8,7 +8,7 @@ import { Task } from './task.model';
   providedIn: 'root'
 })
 export class TaskService {
-  private apiUrl = 'http://localhost:8080/api/tasks';
+  private apiUrl = 'https://task-mate-t98z.onrender.com/api/tasks';
 
   constructor(private http: HttpClient) {}
 
